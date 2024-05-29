@@ -1,0 +1,12 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Articles</h1>
+
+<div class="container">
+  <input type="text" id="search-input" placeholder="Search articles...">
+  <div id="results">
+    <%= render @articles %>
+  </div>
+</div>
+
+<%= link_to "New article", new_article_path %>
