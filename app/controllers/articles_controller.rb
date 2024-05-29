@@ -35,7 +35,11 @@ class ArticlesController < ApplicationController
 
   def record_search(query)
     user_identifier = request.remote_ip
-    SearchQuery.create(query: query, ip_address: request.remote_ip, user_identifier: user_identifier)
+    previous_query = SearchQuery.where(user_identifier: user_identifier).order(created_at: :desc).first
+
+    if previous_query.nil? || !query.start_with?(previous_query.query)
+      SearchQuery.create(query: query, ip_address: request.remote_ip, user_identifier: user_identifier)
+    end
   end
 end
 
