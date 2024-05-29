@@ -13,11 +13,28 @@ class ArticlesController < ApplicationController
       format.json { render json: @articles }
     end
   end
-  
+
+  def new
+    @article = Article.new
+  end
+
+  def create
+    @article = Article.new(article_params)
+    if @article.save
+      redirect_to articles_path, notice: 'Article was successfully created.'
+    else
+      render :new
+    end
+  end
+
   private
-  
+
+  def article_params
+    params.require(:article).permit(:title, :content)
+  end
+
   def record_search(query)
-    user_identifier = request.remote_ip # Can be replaced with a more unique identifier
+    user_identifier = request.remote_ip
     SearchQuery.create(query: query, ip_address: request.remote_ip, user_identifier: user_identifier)
   end
 end
@@ -83,4 +100,4 @@ end
     def article_params
       params.require(:article).permit(:title, :content)
     end
-end
+

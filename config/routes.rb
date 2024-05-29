@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-    root 'articles#index'  # Ensure this line is present
-    resources :articles, only: [:index, :show]
-    resources :analytics, only: [:index]
+  root 'articles#index'
+  resources :articles, only: [:index, :show, :new, :create]
+  resources :analytics, only: [:index]
 end
